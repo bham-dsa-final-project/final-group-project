@@ -8,10 +8,6 @@ module "ecr" {
   source = "./modules/ecr"
 }
 
-# IAM Role for ECS Task Execution
-module "iam" {
-  source = "./modules/iam"
-}
 
 # Networking (VPC, Subnets, Security Groups)
 module "network" {
@@ -22,6 +18,7 @@ module "network" {
 module "ecs" {
   source = "./modules/ecs"
   ecr_repository_url = ""
+  subnet_count = aws_subnet.group_work_public_subnet
 }
 
 # Outputs
@@ -36,17 +33,6 @@ output "ecs_service_endpoint" {
 # module "network" {
 #   source = "./modules/network"
 # }
-
-
-output "ecs_task_execution_role_arn" {
-  value = module.iam.ecs_task_execution_role_arn
-}
-
-output "ecs_task_execution_role_policy_attachment_id" {
-  value = module.iam.ecs_task_execution_role_policy_attachment_id
-}
-
-
 
 
 
@@ -73,4 +59,15 @@ output "subnet_ids" {
 output "security_group_id" {
   value = module.network.security_group_id
 }
+
+
+module " aws_subnet.group_work_public_subnet" {
+  
+}
+
+
+
+
+
+
 
